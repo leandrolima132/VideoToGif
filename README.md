@@ -1,37 +1,15 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Projeto de Conversão de Vídeo para GIF
 
-## Getting Started
+Este projeto permite a conversão de vídeos em formato `.mp4` (ou outros formatos suportados) para imagens no formato `.gif`. Ele foi criado com o objetivo de otimizar o processo de envio de evidências de atividades, especialmente quando o Azure não aceitava arquivos grandes. Agora, com este projeto, é possível transformar trechos de vídeos em GIFs leves e fáceis de enviar.
 
-First, run the development server:
+## Motivação
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+A motivação para a criação deste projeto surgiu da necessidade de enviar evidências de atividades para o Azure, mas frequentemente o sistema não aceitava arquivos de vídeo grandes. Para otimizar esse processo e facilitar meu dia a dia, decidi implementar uma ferramenta que converte vídeos em GIFs, que são mais leves e mais facilmente aceitos pela plataforma. Assim, esse projeto foi desenvolvido para melhorar a experiência de envio de evidências de forma rápida e eficiente.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Funcionalidades
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Conversão de vídeo para GIF:** Converta arquivos de vídeo para o formato GIF.
+- **Personalização de parâmetros:** Defina a duração do GIF, a qualidade e outras configurações.
+- **Fácil de usar:** Simples integração e execução.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-# VideoToGif
+Link - https://video-to-gif-7jr1.vercel.app/
