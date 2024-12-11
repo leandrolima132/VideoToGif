@@ -1,6 +1,6 @@
 'use client'
 import { ChangeEvent, FormEvent, useState } from "react";
-import { FFmpeg } from '@ffmpeg/ffmpeg'
+import { FFmpeg } from '@ffmpeg/ffmpeg';
 import Image from "next/image";
 import { fetchFile } from "@ffmpeg/util";
 
@@ -10,15 +10,18 @@ export default function Home() {
   const [gifUrl, setGifUrl] = useState<string | null>(null);
   const [feedback, setFeedback] = useState<string>("");
   const [gifFileName, setGifFileName] = useState<string>("");
+  const [speed, setSpeed] = useState<number>(1);
 
-  // Handle video file change
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>): void => {
     if (e.target.files) {
       setVideo(e.target.files[0]);
     }
   };
 
-  // Function to create GIF from video
+  const handleSpeedChange = (e: ChangeEvent<HTMLSelectElement>): void => {
+    setSpeed(parseFloat(e.target.value));
+  };
+
   const createGifFromVideo = async () => {
     if (!video) return;
 
@@ -28,42 +31,36 @@ export default function Home() {
     try {
       const ffmpeg = new FFmpeg();
       setFeedback("Carregando FFmpeg...");
-      await ffmpeg.load(); // Load FFmpeg
+      await ffmpeg.load();
 
       setFeedback("Carregando o arquivo de vídeo...");
       const videoBlob = await fetchFile(video);
       const videoName = video.name;
 
-      // Gerar o nome do GIF com base na data e hora atual
       const currentDate = new Date();
       const formattedDate = currentDate.toISOString().replace(/[^\w]/g, "-");
       const outputFileName = `${formattedDate}.gif`;
 
-      // Store video file in FFmpeg's virtual file system
       ffmpeg.writeFile(videoName, new Uint8Array(videoBlob));
 
       setFeedback("Processando vídeo para GIF...");
-      // FFmpeg command to convert the video to a GIF
       const command = [
-        '-i', videoName,               // Input video file
-        '-vf', 'fps=10,scale=320:-1',  // Optional: set FPS and size for the GIF (adjust as needed)
-        outputFileName                 // Dynamic output file name
+        '-i', videoName,
+        '-vf', `fps=10,scale=320:-1,setpts=PTS/${speed}`,
+        outputFileName
       ];
 
-      // Execute FFmpeg command
       await ffmpeg.exec(command);
 
       setFeedback("Finalizando a conversão...");
 
-      // Read the output GIF from FFmpeg's virtual file system
       const outputData = await ffmpeg.readFile(outputFileName);
 
-      // Create a Blob URL from the output data
       const blob = new Blob([outputData], { type: 'image/gif' });
       const gifUrl = URL.createObjectURL(blob);
 
       setGifUrl(gifUrl);
-      setGifFileName(outputFileName);  // Store the dynamically generated file name for later use
+      setGifFileName(outputFileName);
       setLoading(false);
       setFeedback("GIF criado com sucesso!");
     } catch (error) {
@@ -73,12 +70,11 @@ export default function Home() {
     }
   };
 
-  // Handle form submit
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
     if (!video) return;
     setGifUrl(null);
-    setGifFileName(""); 
+    setGifFileName("");
     await createGifFromVideo();
   };
 
@@ -94,6 +90,21 @@ export default function Home() {
             accept="video/*"
             className="w-full py-3 px-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
+
+          <label className="block w-full text-left">
+            <span className="text-gray-700">Velocidade:</span>
+            <select
+              value={speed}
+              onChange={handleSpeedChange}
+              className="mt-2 block w-full py-2 px-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              <option value={0.5}>0.5x (Mais Lento)</option>
+              <option value={1}>1x (Normal)</option>
+              <option value={1.5}>1.5x (Rápido)</option>
+              <option value={2}>2x (Muito Rápido)</option>
+            </select>
+          </label>
+
           <button
             type="submit"
             disabled={loading}
@@ -121,7 +132,7 @@ export default function Home() {
             />
             <a
               href={gifUrl}
-              download={gifFileName}  
+              download={gifFileName}
               className="mt-4 inline-block px-6 py-2 bg-green-500 text-white font-semibold rounded-lg hover:bg-green-600"
             >
               Baixar GIF
