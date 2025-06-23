@@ -242,7 +242,7 @@ export default function Home() {
                   <select
                     value={speed}
                     onChange={(e) => setSpeed(parseFloat(e.target.value))}
-                    className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                    className="w-full border border-gray-300 text-gray-400 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                   >
                     <option value={0.5}>0.5x (Mais lento)</option>
                     <option value={1}>1x (Normal)</option>
@@ -258,7 +258,7 @@ export default function Home() {
                   <select
                     value={quality}
                     onChange={(e) => setQuality(e.target.value as 'low' | 'medium' | 'high')}
-                    className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                    className="w-full border border-gray-300 text-gray-400 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                   >
                     <option value="low">Baixa (Menor arquivo)</option>
                     <option value="medium">Média (Balanceado)</option>
@@ -279,7 +279,7 @@ export default function Home() {
                       onClick={() => setSize(sizeOption)}
                       className={`p-3 rounded-xl border-2 transition font-medium ${size === sizeOption
                         ? 'border-purple-500 bg-purple-50 text-purple-700'
-                        : 'border-gray-200 hover:border-gray-300'
+                        : 'border-gray-200 hover:border-gray-300 text-gray-400'
                         }`}
                     >
                       {sizeOption === 'small' && '📱 Pequeno'}
